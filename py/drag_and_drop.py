@@ -1,69 +1,70 @@
-from PyQt5.QtWidgets import QPushButton, QWidget, QApplication, QListWidget, QHBoxLayout, QListWidgetItem
+from PyQt5.QtWidgets import QPushButton, QWidget, QApplication, QListWidget, QHBoxLayout, QListWidgetItem, QBoxLayout
 from PyQt5.QtCore import Qt, QMimeData
 from PyQt5.QtGui import QDrag, QIcon
 import sys
 import card
 
-class Button(QPushButton):
-    def __init__(self, title, parent):
-        super().__init__(title, parent)
-    
-    def mouseMoveEvent(self, e):
-        if e.buttons() != Qt.LeftButton:
-            return
-        
-        mimeData = QMimeData()
-
-        drag = QDrag(self)
-        drag.setMimeData(mimeData)
-
-        drag.exec_(Qt.MoveAction)
-
 class FiledView(QWidget):
-    def __init__(self):
+    def __init__(self, p, a):
         super().__init__()
+        self.p = p
+        self.a = a
         self.initUI()
     
     def initUI(self):
         self.setAcceptDrops(True)
 
-        self.myListWidget = QListWidget()
-        self.myListWidget.setViewMode(QListWidget.IconMode)
-        self.myListWidget.setAcceptDrops(True)
-        self.myListWidget.setDragEnabled(True)
+        self.player = QListWidget()
+        self.ai = QListWidget()
+        self.filed = QListWidget()
 
-        self.setGeometry(300,350,500,300)
+
+        self.player.setViewMode(QListWidget.IconMode)
+        self.player.setAcceptDrops(True)
+        self.player.setDragEnabled(True)
+
+        self.ai.setViewMode(QListWidget.IconMode)
+        self.ai.setAcceptDrops(True)
+        self.ai.setDragEnabled(True)
+
+        self.filed.setViewMode(QListWidget.IconMode)
+        self.filed.setAcceptDrops(True)
+        self.filed.setDragEnabled(True)
+
+        self.setGeometry(300,350,1000,600)
         
-        self.hboxlayout = QHBoxLayout()
-        self.hboxlayout.addWidget(self.myListWidget)
+        self.big = QBoxLayout(QBoxLayout.LeftToRight, self)
+        self.small = QBoxLayout(QBoxLayout.TopToBottom)
+        self.small.addWidget(self.player)
+        self.small.addWidget(self.ai)
 
-        l1 = QListWidgetItem(QIcon("../image/1.PNG"), "1")
-        l2 = QListWidgetItem(QIcon("../image/3.PNG"), "3")
+        self.big.addWidget(self.filed)
+        self.big.addLayout(self.small)
         
 
-        self.myListWidget.insertItem(1, l1)
-        self.myListWidget.insertItem(2, l2)
+        cnt = 1
+        for i in self.p:
+            self.player.insertItem(cnt, QListWidgetItem(QIcon("../image/" + i + ".PNG"), i))
+            cnt += 1
+        cnt = 1
+        for i in self.a:
+            self.ai.insertItem(cnt, QListWidgetItem(QIcon("../image/" + i + ".PNG"), i))
+            cnt += 1
+        
 
         self.setWindowTitle("hi")
-        self.setLayout(self.hboxlayout)
-
-        """
-        self.button = Button('Button',self)
-        self.button.move(100,65)
-        self.setWindowTitle('Move')
-        self.setGeometry(300,300,1000,800)
-        """
+        
+        self.setLayout(self.big)
 
     def dragEnterEvent(self, e):
         e.accept()
     
     def dropEvent(self, e):
-        position = e.pos()
-        self.button.move(position)
         e.accept()
     
 if __name__=='__main__':
     app = QApplication(sys.argv)
-    Filed = FiledView()
+    player, ai = card.cardret()
+    Filed = FiledView(player,ai)
     Filed.show()
     app.exec_()

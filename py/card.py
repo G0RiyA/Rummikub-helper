@@ -2,8 +2,8 @@ import random as r
 
 def Gameset(card):
     hand = r.sample(card,28)
-    ai = hand[:15]
-    player = hand[15:]
+    ai = hand[:14]
+    player = hand[14:]
 
     
     return ai, player
@@ -21,5 +21,6 @@ def Cardset():
 def cardret():
     card = Cardset()
     ai, player = Gameset(card)
-    return player
+    return player, ai
 
+cardret()
