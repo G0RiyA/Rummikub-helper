@@ -1,15 +1,7 @@
 import random as r
 
-def Gameset(card):
-    hand = r.sample(card,28)
-    ai = hand[:14]
-    player = hand[14:]
-
-    
-    return ai, player
-    
-
-def Cardset():
+# make rummykub card
+def Makecard():
     orange = ["orange" + str(i) for i in range(1,14)]
     red = ["red" + str(i) for i in range(1,14)]
     black = ["black" + str(i) for i in range(1,14)]
@@ -17,10 +9,27 @@ def Cardset():
     
     return orange*2 + red*2 + black*2 + blue*2 + ["joker"]*2
 
+# choice random card
+def Gameset(cards):
+    hand = []
+    for i in range(14):
+        card = r.choice(cards)
+        hand.append(card)
+        cards.remove(card)
 
-def cardret():
-    card = Cardset()
-    ai, player = Gameset(card)
-    return player, ai
+    return hand, cards
 
-cardret()
+# card drow
+def Drow(cards):
+    card = r.choice(cards)
+    cards.remove(card)
+
+    return card, cards
+
+# set rummykub
+def Cardset():
+    cards = Makecard()
+    hand, cards = Gameset(cards)
+    return hand, cards
+
+
