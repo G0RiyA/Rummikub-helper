@@ -91,6 +91,7 @@ class Table(QWidget):
             self.cards.remove(user_input)
             self.hand.append(user_input)
             self.cnt += 1
+            self.hand_inputbox.setText('')
 
     def table_btn_click(self):
         user_input = self.table_inputbox.text()
@@ -99,6 +100,7 @@ class Table(QWidget):
             self.cards.remove(user_input)
             self.table_card.append(user_input)
             self.cnt += 1
+            self.table_inputbox.setText('')
         
 
     def Now_btn_click(self):
