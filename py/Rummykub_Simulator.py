@@ -30,7 +30,7 @@ class Table(QWidget):
 
         self.vbox = QVBoxLayout() # main layout
         self.hbox = QHBoxLayout() # sub layout
-
+        
         draw_btn = QPushButton("Drow")
         draw_btn.clicked.connect(self.Draw_btn_click)
 
@@ -43,12 +43,15 @@ class Table(QWidget):
         table_btn = QPushButton("Table Add")
         table_btn.clicked.connect(self.table_btn_click)
 
+        clear_btn = QPushButton("Clear")
+        clear_btn.clicked.connect(self.clear_btn_click)
 
         self.hbox.addWidget(self.hand_inputbox)
         self.hbox.addWidget(hand_btn)
         self.hbox.addWidget(self.table_inputbox)
         self.hbox.addWidget(table_btn)
         self.hbox.addStretch(1)
+        self.hbox.addWidget(clear_btn)
         self.hbox.addWidget(solve_btn)
         self.hbox.addWidget(draw_btn)
         
@@ -71,6 +74,7 @@ class Table(QWidget):
         painter.setPen(Qt.red)
         painter.drawLine(11,200,989,200)
     """
+    
     def Draw_btn_click(self):
         ret1, ret2 = card.Drow(self.cards)        
         self.hand.append(ret1)
@@ -102,7 +106,10 @@ class Table(QWidget):
                 self.table_card.append(user_input)
                 self.cnt += 1
                 self.table_inputbox.setText('')
-        
+    
+    def clear_btn_click(self):
+        self.card.clear()
+        self.table.clear()
 
 if __name__=='__main__':
     app = QApplication(sys.argv)
