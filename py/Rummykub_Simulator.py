@@ -43,7 +43,7 @@ class Table(QWidget):
         table_btn = QPushButton("Table Add")
         table_btn.clicked.connect(self.table_btn_click)
 
-        now_btn = QPushButton("Now")
+        now_btn = QPushButton("Now Filed")
         now_btn.clicked.connect(self.Now_btn_click)
 
         self.hbox.addWidget(self.hand_inputbox)
@@ -51,6 +51,7 @@ class Table(QWidget):
         self.hbox.addWidget(self.table_inputbox)
         self.hbox.addWidget(table_btn)
         self.hbox.addStretch(1)
+        self.hbox.addWidget(now_btn)
         self.hbox.addWidget(solve_btn)
         self.hbox.addWidget(draw_btn)
         
