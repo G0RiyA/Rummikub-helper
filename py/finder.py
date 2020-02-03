@@ -38,7 +38,7 @@ def allColorLinear(cards):
 
     allVaildCombo = []
     for combo in vaildLongestCombo:
-        for length in range(3, min(len(list(combo)) + 1, 5)):
+        for length in range(3, min(len(list(combo)) + 1, 6)):
             for start in range(0,len(list(combo))-length + 1):
                 allVaildCombo.append(combo[start:start+length])
 

@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QPushButton, QWidget, QApplication, QListWidget, QHBoxLayout, QListWidgetItem, QBoxLayout, QVBoxLayout, QLineEdit, QMessageBox
-from PyQt5.QtCore import Qt, QMimeData, QRectF, QPoint
+from PyQt5.QtCore import Qt, QMimeData, QRectF, QPoint, QSize
 from PyQt5.QtGui import QDrag, QIcon, QPainter, QPen, QPolygon
 import sys
 import card
@@ -11,15 +11,15 @@ class Answer(QWidget):
         self.vbox = QVBoxLayout()
         for i in answer:
             nowList = [str(card) for card in i]
-            nowWidgetList = QListWidget()
+            nowWidgetList = ListWidget()
             nowWidgetList.setSortingEnabled(0)
             print(nowList)
             cnt = 1
             for card in nowList:
                 nowWidgetList.addItem(QListWidgetItem(QIcon("../image/" + card + ".PNG"), card))
-            nowWidgetList.setViewMode(QListWidget.IconMode)
+            nowWidgetList.setViewMode(ListWidget.IconMode)
             
-            nowWidgetList.sizeH
+            #nowWidgetList.sizeH
 
             self.vbox.addWidget(nowWidgetList)
 
@@ -28,6 +28,12 @@ class Answer(QWidget):
         
         self.setLayout(self.vbox)
 
+class ListWidget(QListWidget):
+    def sizeHint(self):
+        s = QSize()
+        #s.setHeight(super(ListWidget,self).sizeHint().height())
+        s.setWidth(self.sizeHintForColumn(0))
+        return s
         
 
 class Table(QWidget):
@@ -116,7 +122,7 @@ class Table(QWidget):
                 col=i[:-1]
                 num=int(i[-1])
             else:
-                col=t[:-2]
+                col=i[:-2]
                 num=int(i[-2:])
             hands.append(Card(col,num))
         
@@ -125,7 +131,7 @@ class Table(QWidget):
                 col=i[:-1]
                 num=int(i[-1])
             else:
-                col=t[:-2]
+                col=i[:-2]
                 num=int(i[-2:])
             tables.append(Card(col,num))
         
