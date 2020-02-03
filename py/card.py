@@ -7,16 +7,11 @@ def Makecard():
     black = ["black" + str(i) for i in range(1,14)]
     blue = ["blue" + str(i) for i in range(1,14)]
     
-    return orange*2 + red*2 + black*2 + blue*2 + ["joker"]*2
-
+    return orange*2 + red*2 + black*2 + blue*2
+    
 # choice random card
 def Gameset(cards):
     hand = []
-    for i in range(14):
-        card = r.choice(cards)
-        hand.append(card)
-        cards.remove(card)
-
     return hand, cards
 
 # card drow
