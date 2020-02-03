@@ -89,42 +89,25 @@ def findAllColor(cards):
 def findAllCases(combos, hands, tables):
     allCards = list(set(list(set(hands)) + list(set(tables))))
     if len(allCards) == 0:
-        return combos
+        return (0,combos)
 
-    # print(combos)
+    score = 0
+    for card in hands:
+        score += card.number
+
+    if len(allCards) < 3:
+        return (score, combos)
 
     a,b=findAllColor(allCards),findAllLinear(allCards)
-    # print(a)
-    # print(b)
     allCombos=a+b
+
     if len(allCombos) == 0:
-        return []
-    
-    # print(combos)
-
-    # print(allCombos)
-    # print(combos)
-
-    # for i in combos:
-    #     print(i,end=' ')
-    # print(0)
-
-    # print(allCards)
-    # print(allCombos)
-    # print(1)
-
-    # for i in allCombos:
-    #     for j in i:
-    #         print(j,end=" ")
-    #     print()
-    # print(2)
-    
-    # print(combos)
+        return (score, [])
 
     for combo in allCombos:
-        # print(combo)
         if len(combo) == 0:
             continue
+
         newHands = []
         newTables = []
         cb = combo.copy()
@@ -135,48 +118,37 @@ def findAllCases(combos, hands, tables):
             else:
                 newTables.append(i)
 
-        # for i in cb:
-        #     print(i,end=' ')
-        # print()
         for i in hands:
             if i in cb:
-                # print(i,end=' ')
                 cb.remove(i)
             else:
-                # print(i,end=' ')
                 newHands.append(i)
-        # print()
-        # for i in hands:
-        #     print(i,end=' ')
-        # print()
         
         newAllCards = newHands + newTables
-        
-        # print(newAllCards == hands+tables)
 
-        if 0 < len(newAllCards) < 3:continue
-        # for i in combos:
-        #     for j in i:
-        #         print(j,end=' ')
-        #     print()
-        # print(combos)
         ret = combos.copy()
         ret.append(combo)
-        result = findAllCases(ret,newHands,newTables)
-        if result: return result
-    # print(result)
-    return []
+        # print(ret)
+        retscore, retcombos = findAllCases(ret,newHands,newTables)
+        if retscore < score:
+            score,resultCombos = retscore, retcombos
+        # print(score,resultCombos)
+
+    return (score,resultCombos)
                 
 
 def solver(hands, tables):
-    result = findAllCases([], hands, tables)
-    return result
+    score, combos = findAllCases([], hands, tables)
+    # print(combos)
+    # print(2)
+    return combos
 
 
 
 
 
-# test = [card(__colors__[i%3],i//3+1) for i in range(9)]
+test = [Card(__colors__[0],i) for i in range(1,4)] + [Card('black',3),Card('blue',3)]
+test += [Card('orange',i) for i in range(5,9)]
 # for i in test:
 #     print(i,end=' ')
 # print("\n\n\n\n")
@@ -198,7 +170,7 @@ def solver(hands, tables):
 
 # print('\n\n\n\n')
 
-# for i in solver(test,[]):
-#     for j in i:
-#         print(j,end=' ')
-#     print()
+for i in solver(test,[]):
+    for j in i:
+        print(j,end=' ')
+    print()
