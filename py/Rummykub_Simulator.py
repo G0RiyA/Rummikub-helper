@@ -108,6 +108,8 @@ class Table(QWidget):
                 self.table_inputbox.setText('')
     
     def clear_btn_click(self):
+        self.hand, self.cards = card.Cardset()
+        self.table_card = []
         self.card.clear()
         self.table.clear()
 
