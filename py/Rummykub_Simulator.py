@@ -1,8 +1,34 @@
-from PyQt5.QtWidgets import QPushButton, QWidget, QApplication, QListWidget, QHBoxLayout, QListWidgetItem, QBoxLayout, QVBoxLayout, QLineEdit
+from PyQt5.QtWidgets import QPushButton, QWidget, QApplication, QListWidget, QHBoxLayout, QListWidgetItem, QBoxLayout, QVBoxLayout, QLineEdit, QMessageBox
 from PyQt5.QtCore import Qt, QMimeData, QRectF, QPoint
 from PyQt5.QtGui import QDrag, QIcon, QPainter, QPen, QPolygon
 import sys
 import card
+from finder import *
+
+class Answer(QWidget):
+    def __init__(self,answer):
+        super().__init__()
+        self.vbox = QVBoxLayout()
+        for i in answer:
+            nowList = [str(card) for card in i]
+            nowWidgetList = QListWidget()
+            nowWidgetList.setSortingEnabled(0)
+            print(nowList)
+            cnt = 1
+            for card in nowList:
+                nowWidgetList.addItem(QListWidgetItem(QIcon("../image/" + card + ".PNG"), card))
+            nowWidgetList.setViewMode(QListWidget.IconMode)
+            
+            nowWidgetList.sizeH
+
+            self.vbox.addWidget(nowWidgetList)
+
+        # self.setGeometry(50,50,1000,600)
+        self.setWindowTitle("answer")
+        
+        self.setLayout(self.vbox)
+
+        
 
 class Table(QWidget):
     def __init__(self, hand, cards):
@@ -83,7 +109,37 @@ class Table(QWidget):
         self.cnt += 1
 
     def Solve_btn_click(self):
-        pass
+        hands = []
+        tables = []
+        for i in self.hand:
+            if i[-2].isalpha():
+                col=i[:-1]
+                num=int(i[-1])
+            else:
+                col=t[:-2]
+                num=int(i[-2:])
+            hands.append(Card(col,num))
+        
+        for i in self.table_card:
+            if i[-2].isalpha():
+                col=i[:-1]
+                num=int(i[-1])
+            else:
+                col=t[:-2]
+                num=int(i[-2:])
+            tables.append(Card(col,num))
+        
+        answer = solver(hands,tables)
+
+        if not answer:
+            QMessageBox.about(self,"Solver","There is no answer")
+        
+        else:
+            self.popup = Answer(answer)
+            self.popup.show()
+
+
+
 
     def hand_btn_click(self):
         user_inputs = self.hand_inputbox.text()

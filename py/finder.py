@@ -5,7 +5,7 @@ import random
 __colors__ = ("red", "blue", "orange", "black")
 possible = {}
 
-class card:
+class Card:
     def __init__(self, color, number):
         self.color = color
         self.number = number
@@ -176,29 +176,29 @@ def solver(hands, tables):
 
 
 
-test = [card(__colors__[i%3],i//3+1) for i in range(9)]
-for i in test:
-    print(i,end=' ')
-print("\n\n\n\n")
-for i in findAllLinear(test):
-    for j in i:
-        print(j,end=' ')
-    print()
+# test = [card(__colors__[i%3],i//3+1) for i in range(9)]
+# for i in test:
+#     print(i,end=' ')
+# print("\n\n\n\n")
+# for i in findAllLinear(test):
+#     for j in i:
+#         print(j,end=' ')
+#     print()
 
-print('\n\n\n\n')
+# print('\n\n\n\n')
 
-test = [card(col,num) for num in range(1,5) for col in __colors__]
-for i in test:
-    print(i,end=' ')
-print("\n\n\n\n")
-for i in findAllColor(test):
-    for j in i:
-        print(j,end=' ')
-    print()
+# test = [card(col,num) for num in range(1,5) for col in __colors__]
+# for i in test:
+#     print(i,end=' ')
+# print("\n\n\n\n")
+# for i in findAllColor(test):
+#     for j in i:
+#         print(j,end=' ')
+#     print()
 
-print('\n\n\n\n')
+# print('\n\n\n\n')
 
-for i in solver(test,[]):
-    for j in i:
-        print(j,end=' ')
-    print()
+# for i in solver(test,[]):
+#     for j in i:
+#         print(j,end=' ')
+#     print()
