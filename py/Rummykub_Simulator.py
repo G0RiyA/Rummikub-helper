@@ -32,7 +32,7 @@ class ListWidget(QListWidget):
     def sizeHint(self):
         s = QSize()
         #s.setHeight(super(ListWidget,self).sizeHint().height())
-        s.setWidth(self.sizeHintForColumn(0))
+        s.setWidth(300)
         return s
         
 
