@@ -43,15 +43,12 @@ class Table(QWidget):
         table_btn = QPushButton("Table Add")
         table_btn.clicked.connect(self.table_btn_click)
 
-        now_btn = QPushButton("Now Filed")
-        now_btn.clicked.connect(self.Now_btn_click)
 
         self.hbox.addWidget(self.hand_inputbox)
         self.hbox.addWidget(hand_btn)
         self.hbox.addWidget(self.table_inputbox)
         self.hbox.addWidget(table_btn)
         self.hbox.addStretch(1)
-        self.hbox.addWidget(now_btn)
         self.hbox.addWidget(solve_btn)
         self.hbox.addWidget(draw_btn)
         
@@ -85,26 +82,27 @@ class Table(QWidget):
         pass
 
     def hand_btn_click(self):
-        user_input = self.hand_inputbox.text()
-        if user_input in self.cards:
-            self.card.insertItem(self.cnt, QListWidgetItem(QIcon("../image/" + user_input + ".PNG"), user_input))
-            self.cards.remove(user_input)
-            self.hand.append(user_input)
-            self.cnt += 1
-            self.hand_inputbox.setText('')
+        user_inputs = self.hand_inputbox.text()
+        user_inputs = list(map(lambda x:x.strip(), user_inputs.split(',')))
+        for user_input in user_inputs:
+            if user_input in self.cards:
+                self.card.insertItem(self.cnt, QListWidgetItem(QIcon("../image/" + user_input + ".PNG"), user_input))
+                self.cards.remove(user_input)
+                self.hand.append(user_input)
+                self.cnt += 1
+                self.hand_inputbox.setText('')
 
     def table_btn_click(self):
-        user_input = self.table_inputbox.text()
-        if user_input in self.cards:
-            self.table.insertItem(self.cnt, QListWidgetItem(QIcon("../image/" + user_input + ".PNG"), user_input))
-            self.cards.remove(user_input)
-            self.table_card.append(user_input)
-            self.cnt += 1
-            self.table_inputbox.setText('')
+        user_inputs = self.table_inputbox.text()
+        user_inputs = list(map(lambda x:x.strip(), user_inputs.split(',')))
+        for user_input in user_inputs:
+            if user_input in self.cards:
+                self.table.insertItem(self.cnt, QListWidgetItem(QIcon("../image/" + user_input + ".PNG"), user_input))
+                self.cards.remove(user_input)
+                self.table_card.append(user_input)
+                self.cnt += 1
+                self.table_inputbox.setText('')
         
-
-    def Now_btn_click(self):
-        return self.hand, self.table_card
 
 if __name__=='__main__':
     app = QApplication(sys.argv)
