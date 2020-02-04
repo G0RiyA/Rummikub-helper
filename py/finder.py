@@ -4,6 +4,7 @@ import random
 
 __colors__ = ("red", "blue", "orange", "black")
 possible = {}
+memo = {}
 
 class Card:
     def __init__(self, color, number):
@@ -87,9 +88,13 @@ def findAllColor(cards):
     return vaild
 
 def findAllCases(combos, hands, tables):
-    allCards = list(set(list(set(hands)) + list(set(tables))))
+    global memo
+    allCards = tuple(set(list(set(hands)) + list(set(tables))))
     if len(allCards) == 0:
         return (0,combos)
+    
+    if allCards in memo:
+        return memo[allCards]
 
     score = 0
     for card in hands:
@@ -103,6 +108,8 @@ def findAllCases(combos, hands, tables):
 
     if len(allCombos) == 0:
         return (score, [])
+
+    resultCombos = combos.copy()
 
     for combo in allCombos:
         if len(combo) == 0:
@@ -130,17 +137,24 @@ def findAllCases(combos, hands, tables):
         ret.append(combo)
         # print(ret)
         retscore, retcombos = findAllCases(ret,newHands,newTables)
+        # print(retscore)
+        if retscore == 0:
+            return (retscore, retcombos)
         if retscore < score:
             score,resultCombos = retscore, retcombos
         # print(score,resultCombos)
 
-    return (score,resultCombos)
+    memo[allCards] = (score,resultCombos)
+    return memo[allCards]
                 
 
 def solver(hands, tables):
+    global memo
+    memo = {}
     score, combos = findAllCases([], hands, tables)
     # print(combos)
-    # print(2)
+    # print(2) 
+    memo = {}
     return combos
 
 
