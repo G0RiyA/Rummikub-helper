@@ -9,19 +9,28 @@ class Answer(QWidget):
     def __init__(self,answer):
         super().__init__()
         self.vbox = QVBoxLayout()
+        self.hbox = QHBoxLayout()
+
+        cnt = 0
         for i in answer:
             nowList = [str(card) for card in i]
             nowWidgetList = ListWidget()
             nowWidgetList.setSortingEnabled(0)
             print(nowList)
-            cnt = 1
             for card in nowList:
                 nowWidgetList.addItem(QListWidgetItem(QIcon("../image/" + card + ".PNG"), card))
             nowWidgetList.setViewMode(ListWidget.IconMode)
             
-            #nowWidgetList.sizeH
-
-            self.vbox.addWidget(nowWidgetList)
+            self.hbox.addWidget(nowWidgetList)
+            cnt += 1
+            if cnt == 4:
+                self.vbox.addLayout(self.hbox)
+                self.hbox = QHBoxLayout()
+                cnt = 0
+            
+        if cnt >= 1:
+            self.hbox.addStretch(1)
+            self.vbox.addLayout(self.hbox)
 
         # self.setGeometry(50,50,1000,600)
         self.setWindowTitle("answer")
