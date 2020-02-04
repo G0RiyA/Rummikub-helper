@@ -96,9 +96,12 @@ def findAllCases(combos, hands, tables):
     if allCards in memo:
         return memo[allCards]
 
+    # print(len(combos))
     score = 0
-    for card in hands:
-        score += card.number
+    # for card in hands:
+    #     print(score,end=' ')
+    #     score += card.number
+    # print(score)
 
     if len(allCards) < 3:
         return (score, combos)
@@ -107,11 +110,14 @@ def findAllCases(combos, hands, tables):
     allCombos=a+b
 
     if len(allCombos) == 0:
-        return (score, [])
+        return (score, combos)
 
     resultCombos = combos.copy()
 
+    # print(allCombos)
+
     for combo in allCombos:
+        # print(combo)
         if len(combo) == 0:
             continue
 
@@ -131,19 +137,21 @@ def findAllCases(combos, hands, tables):
             else:
                 newHands.append(i)
         
-        newAllCards = newHands + newTables
+        newAllCards = newHands.copy() + newTables.copy()
+
 
         ret = combos.copy()
         ret.append(combo)
-        # print(ret)
-        retscore, retcombos = findAllCases(ret,newHands,newTables)
-        # print(retscore)
+        # print((len(newHands), len(hands)),len(cb),len(combo),len(resultCombos))
+        retscore, retcombos = findAllCases(ret.copy(),newHands,newTables)
+        # print(retscore,len(retcombos))
         if retscore == 0:
             return (retscore, retcombos)
         if retscore < score:
-            score,resultCombos = retscore, retcombos
+            score,resultCombos = retscore, retcombos.copy()
         # print(score,resultCombos)
 
+    # print(len(resultCombos),100)
     memo[allCards] = (score,resultCombos)
     return memo[allCards]
                 
@@ -152,8 +160,6 @@ def solver(hands, tables):
     global memo
     memo = {}
     score, combos = findAllCases([], hands, tables)
-    # print(combos)
-    # print(2) 
     memo = {}
     return combos
 
