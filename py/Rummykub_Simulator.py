@@ -105,7 +105,7 @@ class Table(QWidget):
             self.card.insertItem(self.cnt, QListWidgetItem(QIcon("../image/" + i + ".PNG"), i))
             self.cnt += 1
         
-        self.setGeometry(50,50,1000,600)
+        self.setGeometry(50,50,1280,720)
         self.setWindowTitle("rummykub")
         
         self.setLayout(self.vbox)
